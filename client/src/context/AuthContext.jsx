@@ -79,8 +79,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateUser = (updatedUser) => {
-    setUser(updatedUser);
+  const updateUser = (updatedData) => {
+    setUser((prevUser) => (prevUser ? { ...prevUser, ...updatedData } : updatedData));
   };
 
   return (
