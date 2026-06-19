@@ -80,6 +80,46 @@ const Home = () => {
               Post a Job
             </Link>
           </motion.div>
+
+          <motion.div
+            style={{ perspective: 1200 }}
+            className="relative mx-auto mt-12 w-full max-w-4xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <motion.div
+              style={{ transformStyle: 'preserve-3d' }}
+              animate={{ rotateY: [0, 10, 0, -10, 0], rotateX: [0, 8, 0, -8, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative overflow-hidden rounded-[32px] border border-white/15 bg-white/10 p-8 shadow-2xl backdrop-blur-xl"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/15 to-transparent" />
+              <div className="relative grid gap-4 md:grid-cols-[2fr_1fr]">
+                <div className="rounded-3xl border border-white/10 bg-slate-950/40 p-6 text-white shadow-inner">
+                  <p className="text-sm uppercase tracking-[0.24em] text-primary-200 mb-3">Interactive 3D Experience</p>
+                  <h3 className="text-3xl font-semibold mb-4">Explore roles with confidence</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Professional dashboards, fast searchable listings, and animated 3D visuals make the portal feel modern and polished.
+                  </p>
+                </div>
+                <div className="space-y-4 rounded-3xl border border-white/10 bg-slate-900/30 p-6 text-white">
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <p className="text-sm text-primary-200">Live job search</p>
+                    <p className="text-sm text-slate-300">Instant filter updates and smooth UX.</p>
+                  </div>
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <p className="text-sm text-primary-200">Employer analytics</p>
+                    <p className="text-sm text-slate-300">Review hiring performance at a glance.</p>
+                  </div>
+                  <div className="rounded-2xl bg-white/10 p-4">
+                    <p className="text-sm text-primary-200">Secure auth</p>
+                    <p className="text-sm text-slate-300">JWT-based login and refresh token support.</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

@@ -62,9 +62,11 @@ Complete job listing platform with:
    ```
 
    Update `.env` with:
-   - MongoDB URI from MongoDB Atlas
-   - JWT secrets
-   - Email configuration (optional)
+   - `MONGO_URI` (MongoDB Atlas or local MongoDB)
+   - `JWT_ACCESS_SECRET` and `JWT_REFRESH_SECRET`
+   - `EMAIL_HOST`, `EMAIL_USER`, and `EMAIL_PASS` for password reset emails
+
+   If `MONGO_URI` is not set, the backend will automatically fall back to a local MongoDB instance at `mongodb://127.0.0.1:27017/job_listing_db`.
 
 3. **Setup Frontend**
    ```bash

@@ -9,13 +9,11 @@ export const initializeNotificationService = (socketIOInstance) => {
 
     if (userId) {
       userSockets.set(userId, socket.id);
-      console.log(`User ${userId} connected with socket ${socket.id}`);
     }
 
     socket.on('disconnect', () => {
       if (userId) {
         userSockets.delete(userId);
-        console.log(`User ${userId} disconnected`);
       }
     });
   });
@@ -23,7 +21,6 @@ export const initializeNotificationService = (socketIOInstance) => {
 
 export const notifyUser = (userId, eventName, data) => {
   if (!io) {
-    console.warn('Socket.IO not initialized');
     return;
   }
 

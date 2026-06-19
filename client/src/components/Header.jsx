@@ -100,10 +100,10 @@ const Header = () => {
               >
                 Login
               </Link>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to="/register"
-                  className="px-4 py-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:shadow-lg transition font-medium"
+                  className="btn btn-primary"
                 >
                   Sign Up
                 </Link>

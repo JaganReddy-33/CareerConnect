@@ -9,7 +9,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,6 +36,49 @@ body {
 
 html.dark {
   color-scheme: dark;
+}
+
+:root{
+  --bg: 255,255,255;
+  --surface: 245,247,250;
+  --text: 17,24,39;
+  --muted: 99,102,241;
+  --primary: 20,184,166; /* teal-ish */
+  --accent: 14,165,233;
+  --glass: 255,255,255;
+  --card-shadow: 2,6,23;
+}
+
+.dark :root, .dark {
+  --bg: 15,23,42;
+  --surface: 20,23,31;
+  --text: 226,232,240;
+  --muted: 99,102,241;
+  --primary: 20,184,166;
+  --accent: 14,165,233;
+  --glass: 20,23,31;
+  --card-shadow: 0,0,0;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition-transform duration-200 ease-in-out;
+  }
+
+  .btn-primary {
+    background-image: linear-gradient(90deg, rgba(var(--primary),1), rgba(var(--accent),1));
+    color: white;
+    box-shadow: 0 8px 18px rgba(var(--card-shadow),0.06);
+  }
+
+  .card {
+    @apply rounded-2xl bg-white dark:bg-gray-800 p-4 shadow-sm border border-gray-100 dark:border-gray-700 transition-transform duration-200;
+  }
+
+  .card-ghost {
+    background: linear-gradient(180deg, rgba(var(--glass),0.04), rgba(var(--glass),0.02));
+    backdrop-filter: blur(6px);
+  }
 }
 
 .glass {

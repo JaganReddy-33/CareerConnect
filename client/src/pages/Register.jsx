@@ -29,7 +29,7 @@ const Register = () => {
       setLoading(true);
       const response = await apiClient.post('/auth/register', {
         name: data.name,
-        email: data.email,
+        email: data.email.trim().toLowerCase(),
         password: data.password,
         role,
       });

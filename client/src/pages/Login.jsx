@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
-import apiClient from '../api/axios';
-import { useAuth } from '../context/AuthContext';
-import { useToast } from '../context/ToastContext';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import apiClient from "../api/axios";
+import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -16,12 +20,26 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      const response = await apiClient.post('/auth/login', data);
+      const payload = {
+        ...data,
+        email: data.email.trim().toLowerCase(),
+      };
+      const response = await apiClient.post("/auth/login", payload);
       login(response.data.accessToken, response.data.user);
-      showSuccess('Login successful!');
-      navigate('/dashboard');
+      showSuccess("Login successful!");
+      const user = response.data.user;
+
+      if (user.role === "jobSeeker") {
+        navigate("/jobs");
+      } else if (user.role === "employer") {
+        navigate("/dashboard");
+      } else if (user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      showError(error.response?.data?.message || 'Login failed');
+      showError(error.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -43,7 +61,7 @@ const Login = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 10 },
+      transition: { type: "spring", stiffness: 100, damping: 10 },
     },
   };
 
@@ -63,7 +81,12 @@ const Login = () => {
       <motion.div
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ type: 'spring', stiffness: 50, damping: 15, duration: 0.8 }}
+        transition={{
+          type: "spring",
+          stiffness: 50,
+          damping: 15,
+          duration: 0.8,
+        }}
         className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl dark:shadow-2xl p-8 w-full max-w-md relative z-10 border border-white dark:border-gray-700"
       >
         <motion.div
@@ -101,11 +124,11 @@ const Login = () => {
               </label>
               <motion.input
                 whileFocus={{ scale: 1.02 }}
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^[^@]+@[^@]+\.[^@]+$/,
-                    message: 'Invalid email format',
+                    message: "Invalid email format",
                   },
                 })}
                 type="email"
@@ -129,11 +152,11 @@ const Login = () => {
               </label>
               <motion.input
                 whileFocus={{ scale: 1.02 }}
-                {...register('password', {
-                  required: 'Password is required',
+                {...register("password", {
+                  required: "Password is required",
                   minLength: {
                     value: 6,
-                    message: 'Password must be at least 6 characters',
+                    message: "Password must be at least 6 characters",
                   },
                 })}
                 type="password"
@@ -164,7 +187,10 @@ const Login = () => {
               variants={itemVariants}
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.02, boxShadow: '0 20px 40px rgba(14, 165, 233, 0.3)' }}
+              whileHover={{
+                scale: 1.02,
+                boxShadow: "0 20px 40px rgba(14, 165, 233, 0.3)",
+              }}
               whileTap={{ scale: 0.98 }}
               className="w-full px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-xl font-semibold transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             >
@@ -172,14 +198,14 @@ const Login = () => {
                 animate={{ opacity: loading ? 0.5 : 1 }}
                 transition={{ duration: 0.5, repeat: loading ? Infinity : 0 }}
               >
-                {loading ? 'Signing in...' : 'Sign In'}
+                {loading ? "Signing in..." : "Sign In"}
               </motion.span>
             </motion.button>
           </form>
 
           <motion.div variants={itemVariants} className="mt-8 text-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link
                 to="/register"
                 className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold transition hover:underline"

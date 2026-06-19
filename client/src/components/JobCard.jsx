@@ -1,15 +1,20 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import useTilt from '../hooks/useTilt';
+import { cardHover } from '../utils/motion';
 import { MapPin, Clock, Bookmark, Edit2, Trash2 } from 'lucide-react';
 import { formatSalaryInLakhs } from '../utils/helpers';
 
 const JobCard = ({ job, onSave, user, onEdit, onDelete }) => {
   const isOwner = user?.role === 'employer' && (job.company?._id === user._id || job.company === user._id);
+  const tiltRef = useTilt({ strength: 6, scale: 1.02 });
+
   return (
     <motion.div
-      whileHover={{ y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.15)' }}
+      ref={tiltRef}
+      whileHover={cardHover}
       whileTap={{ y: -4 }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 border border-gray-200 dark:border-gray-700 h-full flex flex-col"
+      className="card h-full flex flex-col"
     >
       <div className="flex justify-between items-start mb-4 flex-shrink-0">
         <div className="flex-1">

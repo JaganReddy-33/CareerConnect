@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import useTilt from '../hooks/useTilt';
 import Badge from './Badge';
 import apiClient from '../api/axios';
 import { formatSalaryInLakhs } from '../utils/helpers';
+import { cardHover } from '../utils/motion';
 
 const JobCardEnhanced = ({ job, isSaved = false, onSaveToggle }) => {
   const [saved, setSaved] = useState(isSaved);
@@ -27,10 +29,13 @@ const JobCardEnhanced = ({ job, isSaved = false, onSaveToggle }) => {
     }
   };
 
+  const tiltRef = useTilt({ strength: 5, scale: 1.015 });
+
   return (
     <motion.div
-      whileHover={{ y: -8, boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)' }}
-      className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition border border-gray-100 dark:border-gray-700"
+      ref={tiltRef}
+      whileHover={cardHover}
+      className="card"
     >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">

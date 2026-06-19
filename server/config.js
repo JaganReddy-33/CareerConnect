@@ -3,17 +3,20 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/job_listing_db';
+
 export const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    if (!process.env.MONGO_URI) {
+      process.stdout.write('MONGO_URI not set. Falling back to local MongoDB: mongodb://127.0.0.1:27017/job_listing_db\n');
+    }
+
+    const conn = await mongoose.connect(MONGO_URI);
+    process.stdout.write(`MongoDB Connected: ${conn.connection.host}\n`);
     
     return conn;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    process.stderr.write(`MongoDB connection error: ${error.message}\n`);
     process.exit(1);
   }
 };

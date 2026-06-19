@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
+import { motion } from 'framer-motion';
 
 import Home from './pages/Home';
 import Jobs from './pages/Jobs';
@@ -23,6 +24,11 @@ import EmployerProfile from './pages/EmployerProfile';
 import ApplicantsPage from './pages/ApplicantsPage';
 import JobSeekerProfile from './pages/JobSeekerProfile';
 import CompanyProfileView from './pages/CompanyProfileView';
+import AdminDashboard from './pages/Dashboard/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminUsers from './pages/Admin/Users';
+import AdminJobs from './pages/Admin/Jobs';
+import AdminSettings from './pages/Admin/Settings';
 
 const queryClient = new QueryClient();
 
@@ -34,29 +40,182 @@ function App() {
           <ToastProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
+
               <main className="flex-1">
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/jobs" element={<Jobs />} />
+
+                  {/* Public Routes */}
+                  <Route
+                    path="/"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        <Home />
+                      </motion.div>
+                    }
+                  />
+
+                  <Route
+                    path="/jobs"
+                    element={
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        <Jobs />
+                      </motion.div>
+                    }
+                  />
+
                   <Route path="/job/:jobId" element={<JobDetail />} />
-                  <Route path="/post-job" element={<PostJob />} />
-                  <Route path="/post-job/:jobId" element={<PostJob />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
                   <Route path="/reset-password" element={<ResetPassword />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/job/:jobId/applicants" element={<ApplicantsPage />} />
-                  <Route path="/saved-jobs" element={<SavedJobs />} />
-                  <Route path="/job-alerts" element={<JobAlerts />} />
-                  <Route path="/recommended-jobs" element={<RecommendedJobs />} />
-                  <Route path="/profile" element={<UserProfile />} />
-                  <Route path="/employer-profile" element={<EmployerProfile />} />
-                  <Route path="/profile/seeker/:userId" element={<JobSeekerProfile />} />
-                  <Route path="/company/:employerId" element={<CompanyProfileView />} />
+
+                  {/* Employer Routes */}
+                  <Route
+                    path="/post-job"
+                    element={
+                      <ProtectedRoute roles={["employer"]}>
+                        <PostJob />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/post-job/:jobId"
+                    element={
+                      <ProtectedRoute roles={["employer"]}>
+                        <PostJob />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/job/:jobId/applicants"
+                    element={
+                      <ProtectedRoute roles={["employer"]}>
+                        <ApplicantsPage />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/employer-profile"
+                    element={
+                      <ProtectedRoute roles={["employer"]}>
+                        <EmployerProfile />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Dashboard Routes */}
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute roles={["jobSeeker", "employer", "admin"]}>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/saved-jobs"
+                    element={
+                      <ProtectedRoute roles={["jobSeeker"]}>
+                        <SavedJobs />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/job-alerts"
+                    element={
+                      <ProtectedRoute roles={["jobSeeker"]}>
+                        <JobAlerts />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/recommended-jobs"
+                    element={
+                      <ProtectedRoute roles={["jobSeeker"]}>
+                        <RecommendedJobs />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute roles={["jobSeeker", "employer", "admin"]}>
+                        <UserProfile />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/profile/seeker/:userId"
+                    element={
+                      <ProtectedRoute roles={["employer", "admin"]}>
+                        <JobSeekerProfile />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Company Route */}
+                  <Route
+                    path="/company/:employerId"
+                    element={<CompanyProfileView />}
+                  />
+
+                  {/* Admin Routes */}
+                  <Route
+                    path="/admin"
+                    element={
+                      <ProtectedRoute roles={["admin"]}>
+                        <AdminDashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/admin/users"
+                    element={
+                      <ProtectedRoute roles={["admin"]}>
+                        <AdminUsers />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/admin/jobs"
+                    element={
+                      <ProtectedRoute roles={["admin"]}>
+                        <AdminJobs />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/admin/settings"
+                    element={
+                      <ProtectedRoute roles={["admin"]}>
+                        <AdminSettings />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* Fallback */}
                   <Route path="*" element={<Navigate to="/" />} />
+
                 </Routes>
               </main>
+
               <Footer />
               <Toast />
             </div>

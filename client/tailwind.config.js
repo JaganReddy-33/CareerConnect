@@ -8,16 +8,16 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c3d66',
+          50: '#f5fbff',
+          100: '#e6f6ff',
+          200: '#c8eeff',
+          300: '#9fe3ff',
+          400: '#66d7ff',
+          500: '#14b8d6',
+          600: '#0ea5c6',
+          700: '#0b8797',
+          800: '#06606a',
+          900: '#054249',
         },
         secondary: {
           50: '#f8fafc',
@@ -46,8 +46,11 @@ export default {
           900: '#111827',
         },
       },
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto'],
+      },
       animation: {
-        fadeIn: 'fadeIn 0.5s ease-in-out',
+        fadeIn: 'fadeIn 0.45s cubic-bezier(0.2,0.9,0.2,1)',
         slideUp: 'slideUp 0.3s ease-out',
         slideDown: 'slideDown 0.3s ease-out',
         slideInLeft: 'slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',

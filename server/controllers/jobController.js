@@ -197,7 +197,7 @@ export const getJobById = async (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
         const user = await User.findById(decoded.id);
-        
+
         if (user && user.role === 'jobSeeker') {
           userId = user._id;
           const existingApplication = await Application.findOne({
@@ -207,7 +207,7 @@ export const getJobById = async (req, res, next) => {
           hasApplied = !!existingApplication;
         }
       } catch (error) {
-        console.error('Error verifying JWT:', error);
+        // Ignore invalid token for public access
       }
     }
 

@@ -7,6 +7,7 @@ import { useToast } from '../../context/ToastContext';
 import { useAuth } from '../../context/AuthContext';
 import { formatDate } from '../../utils/helpers';
 import { Link } from "react-router-dom";
+import { smallHover } from '../../utils/motion';
 
 const STATUS_CONFIG = {
   Applied: { bg: 'from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20', border: 'border-blue-300 dark:border-blue-600', badge: 'bg-blue-600 dark:bg-blue-500 text-white', icon: <Clock size={16} />, color: 'blue', gradient: 'from-blue-600 to-blue-700' },
@@ -126,8 +127,8 @@ const SeekerDashboard = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ delay: idx * 0.05 }}
-                  whileHover={{ scale: 1.01, boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}
-                  className={`bg-gradient-to-r ${STATUS_CONFIG[app.status].bg} border-2 ${STATUS_CONFIG[app.status].border} rounded-lg p-4 shadow-md transition cursor-pointer hover:shadow-lg`}
+                  whileHover={smallHover}
+                  className={`bg-gradient-to-r ${STATUS_CONFIG[app.status].bg} border-2 ${STATUS_CONFIG[app.status].border} rounded-lg p-4 shadow-md transition cursor-pointer hover:shadow-lg will-change-transform`}
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div className="flex-1 min-w-0">

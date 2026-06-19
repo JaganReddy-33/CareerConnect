@@ -32,7 +32,6 @@ const StatCard = ({ icon: Icon, label, value, bgColor, iconColor, borderColor })
     </div>
   </motion.div>
 );
-
 const EmployerDashboard = () => {
   const [jobs, setJobs] = useState([]);
   const [stats, setStats] = useState({});

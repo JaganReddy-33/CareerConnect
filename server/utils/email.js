@@ -22,7 +22,7 @@ export const sendEmail = async (email, subject, html) => {
     await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
-    console.error('Email send error:', error);
+    process.stderr.write(`Email send error: ${error.message}\n`);
     return false;
   }
 };

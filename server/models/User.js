@@ -13,8 +13,9 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please provide an email'],
       unique: true,
       lowercase: true,
+      trim: true,
       match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, 
         'Please provide a valid email',
       ],
     },
@@ -96,32 +97,21 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    console.log('Password not modified, skipping hash');
     return next();
   }
 
   try {
-    console.log('Hashing password for:', this.email);
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(this.password, salt);
-    console.log('Password hashed successfully');
-    console.log('Original:', this.password);
-    console.log('Hashed:', hashedPassword);
     this.password = hashedPassword;
     next();
   } catch (error) {
-    console.error('Error hashing password:', error);
     next(error);
   }
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  console.log('Comparing passwords:');
-  console.log('Entered:', enteredPassword);
-  console.log('Stored (hashed):', this.password);
-  const match = await bcryptjs.compare(enteredPassword, this.password);
-  console.log('Match result:', match);
-  return match;
+  return await bcryptjs.compare(enteredPassword, this.password);
 };
 
 userSchema.methods.toJSON = function () {
