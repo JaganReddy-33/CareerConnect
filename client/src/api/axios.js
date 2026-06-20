@@ -5,8 +5,8 @@ const apiClient = axios.create({
   withCredentials: true,
 });
 
-console.log("API URL =", import.meta.env.VITE_API_URL);
-console.log("SOCKET URL =", import.meta.env.VITE_SOCKET_URL);
+// console.log("API URL =", import.meta.env.VITE_API_URL);
+// console.log("SOCKET URL =", import.meta.env.VITE_SOCKET_URL);
 
 apiClient.interceptors.request.use(
   (config) => {
